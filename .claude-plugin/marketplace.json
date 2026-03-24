@@ -1,0 +1,31 @@
+{
+  "name": "lean",
+  "version": "1.0.0",
+  "description": "Plan tasks with optimal model routing to minimize token usage. Decomposes work into steps, assigns Haiku/Sonnet/Opus per step, adds quality gates, persists plans, and reports savings.",
+  "author": "civillizard",
+  "license": "MIT",
+  "skills": ["skills/lean"],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 hooks/task-model-guard.py"
+          }
+        ]
+      }
+    ]
+  },
+  "keywords": [
+    "token-optimization",
+    "model-routing",
+    "cost-reduction",
+    "task-planning",
+    "quality-gates",
+    "haiku",
+    "sonnet",
+    "opus"
+  ]
+}
