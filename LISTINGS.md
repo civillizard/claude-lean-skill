@@ -34,11 +34,12 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 - **Notes:** No email confirmation or status tracking mechanism found. Gmail search (API) returned only billing emails from Anthropic.
 
 ### SkillHub (skillhub.club)
-- **Status:** NOT INDEXED
-- **How it works:** Auto-indexes GitHub repos with `SKILL.md` files following Anthropic standard format
-- **Why not indexed:** The `SKILL.md` is at `skills/lean/SKILL.md` inside the repo — may need to be at root, or SkillHub may not crawl subdirectories
+- **Status:** NOT INDEXED (as of 2026-03-30, waiting for auto-discovery)
+- **How it works:** Auto-indexes GitHub repos with `SKILL.md` files — no manual submission needed
+- **SKILL.md location:** `skills/lean/SKILL.md` is correct (matches Anthropic's own repo pattern at `anthropics/skills`)
+- **CLI:** Broken (v0.1.2, malformed OAuth URL — concatenates domain twice). Not needed — auto-indexing is the standard path.
 - **Platform:** Legitimate (36K+ skills, Anthropic's own 17 skills listed, desktop app with 494 GitHub stars)
-- **Action needed:** Verify if SKILL.md location matters, possibly add root-level SKILL.md or register via CLI (`npx @skill-hub/cli publish`)
+- **Next check:** If not indexed by 2026-04-01, file issue on `skillhub-club/cli` repo
 
 ## Distribution Channels
 
