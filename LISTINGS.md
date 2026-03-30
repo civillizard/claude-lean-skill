@@ -21,11 +21,13 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 - **Labels:** validation-passed, resource-submission
 - **Notes:** All validation checks passed. Maintainer asked to resubmit after cooldown. Use web UI form only.
 
-### travisvn / awesome-claude-code
-- **Status:** NOT YET SUBMITTED
-- **Method:** Web UI issue form only (strict policy — ban risk for PR/CLI submissions)
-- **Requirements:** Quality README, OSS license, evidence-based claims, unique (no duplicates)
-- **Notes:** CONTRIBUTING.md warns against any submission method other than their web form template
+### travisvn / awesome-claude-skills
+- **URL:** https://github.com/travisvn/awesome-claude-skills/pull/457
+- **Status:** OPEN, awaiting maintainer review
+- **Submitted:** 2026-03-30
+- **Method:** PR from fork (`civillizard/awesome-claude-skills-1`, branch `add-lean-skill`)
+- **Category:** Individual Skills table (between loki-mode and Trail of Bits)
+- **Notes:** Repo renamed from `awesome-claude-code`. Accepts PRs (not issue-only). Requires "social proof" for skills. 216 open PRs at time of submission.
 
 ### Anthropic Plugin Directory
 - **Status:** Submitted for review (no confirmation email received)
