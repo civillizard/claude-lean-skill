@@ -30,10 +30,13 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 - **Notes:** Repo renamed from `awesome-claude-code`. Accepts PRs (not issue-only). Requires "social proof" for skills. 216 open PRs at time of submission.
 
 ### Anthropic Plugin Directory
-- **Status:** Submitted for review (no confirmation email received)
-- **Submitted:** ~2026-03-24 (via Anthropic website)
-- **Method:** Web form on anthropic.com
-- **Notes:** No email confirmation or status tracking mechanism found. Gmail search (API) returned only billing emails from Anthropic.
+- **URL:** https://platform.claude.com/plugins/submissions (track status here)
+- **Status:** SUBMITTED — pending review
+- **Submitted:** 2026-03-30 (first-ever submission — never previously submitted despite memory claiming ~Mar 24)
+- **Method:** Web form at `platform.claude.com/plugins/submit`
+- **Portal:** Submit: `/plugins/submit` | Track: `/plugins/submissions` (only visible after submitting)
+- **Details submitted:** Name: lean, Platform: Claude Code, License: MIT, Email: mao@6ra3.com
+- **Notes:** No confirmation email sent. Status trackable only via the submissions page. Review timeline unknown — docs say "may reach out for additional information."
 
 ### SkillHub (skillhub.club)
 - **Status:** NOT INDEXED (as of 2026-03-30, waiting for auto-discovery)
