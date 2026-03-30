@@ -1,0 +1,11 @@
+# Fork used for ComposioHQ PR submission
+awesome-claude-skills/
+
+# OS
+.DS_Store
+
+# Lean plan artifacts (generated at runtime)
+.lean-plan.md
+
+# Node modules (from SkillHub CLI)
+node_modules/
