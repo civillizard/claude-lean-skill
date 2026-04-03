@@ -13,10 +13,9 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 - **Notes:** Repo was originally `awesome-claude-code`, renamed to `awesome-claude-skills`. PR survived the rename.
 
 ### hesreallyhim / awesome-claude-code
-- **URL:** https://github.com/hesreallyhim/awesome-claude-code/issues/1091
-- **Status:** CLOSED — 7-day cooldown applied (repo was <1 week old at submission)
-- **Submitted:** 2026-03-24
-- **Resubmit after:** 2026-03-31
+- **URL:** https://github.com/hesreallyhim/awesome-claude-code/issues/1323
+- **Status:** OPEN — pending-validation, awaiting bot + maintainer review
+- **Submitted:** 2026-04-03 (resubmission of #1091, closed 2026-03-24 for 7-day cooldown)
 - **Method:** Issue form (web UI only — CLI/PR submissions risk ban)
 - **Labels:** validation-passed, resource-submission
 - **Notes:** All validation checks passed. Maintainer asked to resubmit after cooldown. Use web UI form only.
