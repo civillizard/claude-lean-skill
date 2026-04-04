@@ -34,7 +34,7 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 - **Submitted:** 2026-03-30 (first-ever submission — never previously submitted despite memory claiming ~Mar 24)
 - **Method:** Web form at `platform.claude.com/plugins/submit`
 - **Portal:** Submit: `/plugins/submit` | Track: `/plugins/submissions` (only visible after submitting)
-- **Details submitted:** Name: lean, Platform: Claude Code, License: MIT, Email: mao@6ra3.com
+- **Details submitted:** Name: lean, Platform: Claude Code, License: MIT
 - **Notes:** No confirmation email sent. Status trackable only via the submissions page. Review timeline unknown — docs say "may reach out for additional information."
 
 ### SkillHub (skillhub.club)

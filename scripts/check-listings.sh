@@ -1,11 +1,14 @@
 #!/bin/bash
 # check-listings.sh — Monitor lean skill directory listing statuses
-# Runs daily via launchd. Emails mao@6ra3.com only on status changes.
+# Runs daily via launchd. Sends email only on status changes.
+#
+# Configure recipient via LEAN_LISTINGS_EMAIL env var (launchd plist or shell).
+# If unset, the script logs but does not send email.
 
 set -euo pipefail
 
 STATE_FILE="$HOME/.local/state/lean-listings.state"
-EMAIL="mao@6ra3.com"
+EMAIL="${LEAN_LISTINGS_EMAIL:-}"
 SUBJECT="[lean skill] Listing status change"
 
 mkdir -p "$(dirname "$STATE_FILE")"
@@ -127,8 +130,10 @@ $(diff <(echo "$PREVIOUS") <(echo "$CURRENT") || true)
 "
     fi
 
-    # Send email
-    echo "$REPORT" | mail -s "$SUBJECT" "$EMAIL" 2>/dev/null || true
+    # Send email if recipient is configured
+    if [ -n "$EMAIL" ]; then
+        echo "$REPORT" | mail -s "$SUBJECT" "$EMAIL" 2>/dev/null || true
+    fi
 
     # Also log
     echo "[$(date '+%Y-%m-%d %H:%M')] Status change detected:" >> "$HOME/.local/log/lean-listings.log"
