@@ -134,3 +134,13 @@ See the [`examples/`](examples/) directory for sample plans and savings reports.
 ## License
 
 MIT
+
+## Author & Contact
+
+**Mamdoh AlOqiel** — Riyadh, Saudi Arabia
+
+- **Email:** [mao@6ra3.com](mailto:mao@6ra3.com)
+- **Issues & feedback:** [GitHub Issues](https://github.com/civillizard/claude-lean-skill/issues)
+- **Contributions:** Pull requests welcome — open an issue first to discuss bigger changes
+
+Open to collaboration on Claude Code tooling, token optimization, and AI workflow automation.
