@@ -47,7 +47,27 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 - **Submitted:** 2026-03-30 | **Closed:** before 2026-04-07
 - **Notes:** 216 open PRs at time of submission. Closed without merge.
 
-## Distribution Channels
+---
+
+## MacOS Full Disk Access Tunnel — Directory Listings
+
+### iCHAIT / awesome-macOS
+- **URL:** https://github.com/iCHAIT/awesome-macOS/pull/772
+- **Status:** REJECTED — closed by maintainer (herrbischoff) on 2026-04-07
+- **Submitted:** 2026-04-03
+- **Rejection reasons:** New repo with no stars; perceived as "circumventing security"; AI integration section flagged; didn't follow PR template (checklist items, alphabetical order, icon badges)
+- **Maintainer:** Marcel Bischoff (marcel@herrbischoff.com, @herrbischoff)
+- **Notes:** Hostile tone ("Don't submit this again"). Consider improving README framing before any future engagement. Do NOT resubmit.
+
+### BlackSquirrelz / awesome-apple-security
+- **URL:** https://github.com/BlackSquirrelz/awesome-apple-security/pull/2
+- **Status:** OPEN — awaiting review
+- **Submitted:** 2026-04-03
+- **Notes:** Security-focused audience, more likely to understand FDA's legitimate use case
+
+---
+
+## Distribution Channels (lean-skill)
 
 ### GitHub Repository
 - **URL:** https://github.com/civillizard/claude-lean-skill
