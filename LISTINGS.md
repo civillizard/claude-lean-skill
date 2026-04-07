@@ -4,61 +4,59 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 
 ## Active Listings
 
-### ComposioHQ / awesome-claude-skills
-- **URL:** https://github.com/ComposioHQ/awesome-claude-skills/pull/481
-- **Status:** OPEN, mergeable, awaiting maintainer review
-- **Submitted:** 2026-03-24
-- **Method:** PR from fork (`civillizard/awesome-claude-skills`, branch `add-lean-skill`)
-- **Category:** Development & Code Tools (alphabetical, between LangSmith Fetch and MCP Builder)
-- **Notes:** Repo was originally `awesome-claude-code`, renamed to `awesome-claude-skills`. PR survived the rename.
-
 ### hesreallyhim / awesome-claude-code
 - **URL:** https://github.com/hesreallyhim/awesome-claude-code/issues/1323
-- **Status:** OPEN — pending-validation, awaiting bot + maintainer review
+- **Status:** OPEN — validation-passed, awaiting maintainer review
 - **Submitted:** 2026-04-03 (resubmission of #1091, closed 2026-03-24 for 7-day cooldown)
 - **Method:** Issue form (web UI only — CLI/PR submissions risk ban)
 - **Labels:** validation-passed, resource-submission
 - **Notes:** All validation checks passed. Maintainer asked to resubmit after cooldown. Use web UI form only.
 
-### travisvn / awesome-claude-skills
-- **URL:** https://github.com/travisvn/awesome-claude-skills/pull/457
-- **Status:** OPEN, awaiting maintainer review
-- **Submitted:** 2026-03-30
-- **Method:** PR from fork (`civillizard/awesome-claude-skills-1`, branch `add-lean-skill`)
-- **Category:** Individual Skills table (between loki-mode and Trail of Bits)
-- **Notes:** Repo renamed from `awesome-claude-code`. Accepts PRs (not issue-only). Requires "social proof" for skills. 216 open PRs at time of submission.
-
 ### Anthropic Plugin Directory
 - **URL:** https://platform.claude.com/plugins/submissions (track status here)
 - **Status:** SUBMITTED — pending review
-- **Submitted:** 2026-03-30 (first-ever submission — never previously submitted despite memory claiming ~Mar 24)
+- **Submitted:** 2026-03-30
 - **Method:** Web form at `platform.claude.com/plugins/submit`
 - **Portal:** Submit: `/plugins/submit` | Track: `/plugins/submissions` (only visible after submitting)
 - **Details submitted:** Name: lean, Platform: Claude Code, License: MIT
-- **Notes:** No confirmation email sent. Status trackable only via the submissions page. Review timeline unknown — docs say "may reach out for additional information."
+- **Notes:** No confirmation email sent. Status trackable only via the submissions page. Review timeline unknown.
 
 ### SkillHub (skillhub.club)
-- **Status:** NOT INDEXED (as of 2026-03-30, waiting for auto-discovery)
+- **Status:** NOT INDEXED (as of 2026-04-07, waiting for auto-discovery)
 - **How it works:** Auto-indexes GitHub repos with `SKILL.md` files — no manual submission needed
 - **SKILL.md location:** `skills/lean/SKILL.md` is correct (matches Anthropic's own repo pattern at `anthropics/skills`)
-- **CLI:** Broken (v0.1.2, malformed OAuth URL — concatenates domain twice). Not needed — auto-indexing is the standard path.
+- **CLI:** Broken (v0.1.2, malformed OAuth URL). Not needed — auto-indexing is the standard path.
 - **Platform:** Legitimate (36K+ skills, Anthropic's own 17 skills listed, desktop app with 494 GitHub stars)
-- **Next check:** If not indexed by 2026-04-01, file issue on `skillhub-club/cli` repo
+
+### Anthropic Skills Repo (anthropics/skills)
+- **Status:** NOT SUBMITTED
+- **Method:** PR to official repo — more formal, gives Anthropic endorsement
+- **Notes:** Would be the highest-value listing if accepted
+
+## Closed Listings
+
+### ComposioHQ / awesome-claude-skills
+- **URL:** https://github.com/ComposioHQ/awesome-claude-skills/pull/481
+- **Status:** CLOSED (not merged)
+- **Submitted:** 2026-03-24 | **Closed:** before 2026-04-07
+- **Notes:** Repo renamed from `awesome-claude-code` to `awesome-claude-skills`. PR closed without merge.
+
+### travisvn / awesome-claude-skills
+- **URL:** https://github.com/travisvn/awesome-claude-skills/pull/457
+- **Status:** CLOSED (not merged)
+- **Submitted:** 2026-03-30 | **Closed:** before 2026-04-07
+- **Notes:** 216 open PRs at time of submission. Closed without merge.
 
 ## Distribution Channels
 
 ### GitHub Repository
 - **URL:** https://github.com/civillizard/claude-lean-skill
 - **Visibility:** Public
-- **Stats (as of 2026-03-30):** 0 stars, 0 forks, 22 clones (21 unique) in last 14 days, 4 unique page views
+- **Stats (2026-04-07):** 0 stars, 0 forks, 114 clones (76 unique), 25 views (17 unique) in last 14 days
+- **Referrers:** github.com, Google, Bing
 
 ### YouTube
 - **Short:** https://youtube.com/shorts/FdOQP8GZVrs (shared 2026-03-26)
-
-### Anthropic Skills Repo (anthropics/skills)
-- **Status:** NOT SUBMITTED
-- **Method:** PR to official repo — more formal, gives Anthropic endorsement
-- **Notes:** Would be the highest-value listing if accepted
 
 ## Submission Best Practices (Reference)
 
