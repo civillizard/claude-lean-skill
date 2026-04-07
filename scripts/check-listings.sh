@@ -1,6 +1,8 @@
 #!/bin/bash
-# check-listings.sh — Monitor lean skill directory listing statuses
+# check-listings.sh — Monitor public repo directory listing PRs
 # Runs daily via launchd. Sends email only on status changes.
+#
+# Tracks: lean-skill listings + Saudi-RE-Data directories + FDA-Tunnel directories
 #
 # Configure recipient via LEAN_LISTINGS_EMAIL env var (launchd plist or shell).
 # If unset, the script logs but does not send email.
@@ -9,41 +11,62 @@ set -euo pipefail
 
 STATE_FILE="$HOME/.local/state/lean-listings.state"
 EMAIL="${LEAN_LISTINGS_EMAIL:-}"
-SUBJECT="[lean skill] Listing status change"
+SUBJECT="[repo listings] Status change detected"
 
 mkdir -p "$(dirname "$STATE_FILE")"
 
 # Collect current statuses
 declare -A STATUS
 
-# 1. ComposioHQ PR #481
+# ── lean-skill listings ──
+
+# 1. ComposioHQ PR #481 (CLOSED — kept for history)
 composio_state=$(gh pr view 481 --repo ComposioHQ/awesome-claude-skills --json state -q .state 2>/dev/null || echo "ERROR")
-STATUS[composio]="$composio_state"
+STATUS[lean_composio]="$composio_state"
 
-# 2. travisvn PR #457
+# 2. travisvn PR #457 (CLOSED — kept for history)
 travisvn_state=$(gh pr view 457 --repo travisvn/awesome-claude-skills --json state -q .state 2>/dev/null || echo "ERROR")
-STATUS[travisvn]="$travisvn_state"
+STATUS[lean_travisvn]="$travisvn_state"
 
-# 3. hesreallyhim issue #1091
-hesreallyhim_state=$(gh issue view 1091 --repo hesreallyhim/awesome-claude-code --json state -q .state 2>/dev/null || echo "ERROR")
-STATUS[hesreallyhim]="$hesreallyhim_state"
+# 3. hesreallyhim issue #1323
+hesreallyhim_state=$(gh issue view 1323 --repo hesreallyhim/awesome-claude-code --json state -q .state 2>/dev/null || echo "ERROR")
+STATUS[lean_hesreallyhim]="$hesreallyhim_state"
 
 # 4. SkillHub — check if indexed
 skillhub_check=$(curl -s "https://www.skillhub.club/skills?search=lean" 2>/dev/null | grep -oi "civillizard\|claude-lean-skill" | head -1 || true)
 if [ -n "$skillhub_check" ]; then
-    STATUS[skillhub]="INDEXED"
+    STATUS[lean_skillhub]="INDEXED"
 else
-    STATUS[skillhub]="NOT_INDEXED"
+    STATUS[lean_skillhub]="NOT_INDEXED"
 fi
 
 # 5. Anthropic — can't check programmatically (needs browser auth)
-#    Placeholder: check if "lean" appears in the public marketplace
 anthropic_check=$(curl -s "https://claude.com/plugins" 2>/dev/null | grep -oi '"lean"' | head -1 || true)
 if [ -n "$anthropic_check" ]; then
-    STATUS[anthropic]="LISTED"
+    STATUS[lean_anthropic]="LISTED"
 else
-    STATUS[anthropic]="PENDING"
+    STATUS[lean_anthropic]="PENDING"
 fi
+
+# ── Saudi-Real-Estate-Data listings ──
+
+# 6. awesomedata/apd-core PR #374
+apd_state=$(gh pr view 374 --repo awesomedata/apd-core --json state,mergedAt -q 'if .mergedAt then "MERGED" else .state end' 2>/dev/null || echo "ERROR")
+STATUS[saudi_apd]="$apd_state"
+
+# 7. NajiElKotob/Awesome-Datasets PR #3
+naji_state=$(gh pr view 3 --repo NajiElKotob/Awesome-Datasets --json state,mergedAt -q 'if .mergedAt then "MERGED" else .state end' 2>/dev/null || echo "ERROR")
+STATUS[saudi_naji]="$naji_state"
+
+# ── MacOS-Full-Disk-Access-Tunnel listings ──
+
+# 8. iCHAIT/awesome-macOS PR #772
+macos_state=$(gh pr view 772 --repo iCHAIT/awesome-macOS --json state,mergedAt -q 'if .mergedAt then "MERGED" else .state end' 2>/dev/null || echo "ERROR")
+STATUS[fda_macos]="$macos_state"
+
+# 9. BlackSquirrelz/awesome-apple-security PR #2
+apple_sec_state=$(gh pr view 2 --repo BlackSquirrelz/awesome-apple-security --json state,mergedAt -q 'if .mergedAt then "MERGED" else .state end' 2>/dev/null || echo "ERROR")
+STATUS[fda_apple_sec]="$apple_sec_state"
 
 # 6. Functional check — repo accessible, SKILL.md exists, install path works
 HEALTH_ISSUES=""
@@ -76,7 +99,7 @@ fi
 
 # Build current state string
 CURRENT=""
-for key in anthropic composio travisvn hesreallyhim skillhub health; do
+for key in lean_anthropic lean_composio lean_travisvn lean_hesreallyhim lean_skillhub saudi_apd saudi_naji fda_macos fda_apple_sec health; do
     CURRENT+="${key}=${STATUS[$key]}"$'\n'
 done
 
@@ -96,22 +119,37 @@ fi
 echo -n "$CURRENT" > "$STATE_FILE"
 
 # Build report
-REPORT="Lean Skill Listing Status — $(date '+%Y-%m-%d %H:%M AST')
+REPORT="Public Repo Listing Status — $(date '+%Y-%m-%d %H:%M AST')
 
-Directory             Status
-─────────────────     ──────────────────
-Anthropic Directory   ${STATUS[anthropic]}
-ComposioHQ PR #481    ${STATUS[composio]}
-travisvn PR #457      ${STATUS[travisvn]}
-hesreallyhim #1091    ${STATUS[hesreallyhim]}
-SkillHub              ${STATUS[skillhub]}
+── claude-lean-skill ──
+Directory               Status
+───────────────────     ──────────────────
+Anthropic Directory     ${STATUS[lean_anthropic]}
+ComposioHQ PR #481      ${STATUS[lean_composio]}
+travisvn PR #457        ${STATUS[lean_travisvn]}
+hesreallyhim #1323      ${STATUS[lean_hesreallyhim]}
+SkillHub                ${STATUS[lean_skillhub]}
 
-Plugin health       ${STATUS[health]}
+── Saudi-Real-Estate-Data ──
+Directory               Status
+───────────────────     ──────────────────
+apd-core PR #374        ${STATUS[saudi_apd]}
+Awesome-Datasets PR #3  ${STATUS[saudi_naji]}
 
-Track Anthropic manually: https://platform.claude.com/plugins/submissions
-ComposioHQ: https://github.com/ComposioHQ/awesome-claude-skills/pull/481
-travisvn: https://github.com/travisvn/awesome-claude-skills/pull/457
-hesreallyhim: https://github.com/hesreallyhim/awesome-claude-code/issues/1091
+── MacOS-FDA-Tunnel ──
+Directory               Status
+───────────────────     ──────────────────
+awesome-macOS PR #772   ${STATUS[fda_macos]}
+apple-security PR #2    ${STATUS[fda_apple_sec]}
+
+Plugin health           ${STATUS[health]}
+
+Links:
+  hesreallyhim: https://github.com/hesreallyhim/awesome-claude-code/issues/1323
+  apd-core: https://github.com/awesomedata/apd-core/pull/374
+  Awesome-Datasets: https://github.com/NajiElKotob/Awesome-Datasets/pull/3
+  awesome-macOS: https://github.com/iCHAIT/awesome-macOS/pull/772
+  apple-security: https://github.com/BlackSquirrelz/awesome-apple-security/pull/2
 "
 
 if [ -n "$HEALTH_ISSUES" ]; then
