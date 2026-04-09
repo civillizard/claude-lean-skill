@@ -61,9 +61,9 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 
 ### BlackSquirrelz / awesome-apple-security
 - **URL:** https://github.com/BlackSquirrelz/awesome-apple-security/pull/2
-- **Status:** OPEN — awaiting review
+- **Status:** MERGED — accepted by Tobias Weisskopf on 2026-04-09
 - **Submitted:** 2026-04-03
-- **Notes:** Security-focused audience, more likely to understand FDA's legitimate use case
+- **Notes:** Listed under "TCC & Permissions Tools". First successful directory listing for FDA Tunnel.
 
 ---
 
