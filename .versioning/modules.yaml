@@ -1,0 +1,10 @@
+# claude-lean-skill module registry for MAJOR.MINOR.SERIAL versioning.
+# See ~/claude-config/lib/versioning/bump.py
+
+project: claude-lean-skill
+
+modules:
+  skills: skills/
+  scripts: scripts/
+  hooks: hooks/
+  examples: examples/
