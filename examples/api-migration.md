@@ -2,32 +2,39 @@
 
 Input: `/lean migrate all 8 REST endpoints from v1 to v2 with new auth middleware`
 
-## Lean Execution Plan
+## Lean Execution Flow
 
 **Task:** Migrate 8 REST endpoints from v1 to v2 with new auth middleware
 
-| # | Step | Model | Why | Agent Type | What |
-|---|------|-------|-----|------------|------|
-| 1 | Explore current endpoints | Haiku | Read-only scan of route files | Explore | Read all 8 endpoint files, summarize patterns, list auth differences |
-| 2 | Migrate `/users` endpoint | Sonnet | Clear spec from step 1 findings | general-purpose | Rewrite users route with v2 patterns + new auth |
-| 3 | Quality gate | Haiku | Validate before scaling | Bash | Run `/users` tests + lint |
-| 4 | Migrate remaining 7 endpoints | Sonnet | Same pattern, can parallelize | general-purpose | Apply v2 pattern to orders, products, payments, etc. |
-| 5 | Final quality gate | Haiku | Catch regressions across all routes | Bash | Full test suite + integration tests |
+| # | Piece | Draft | Gate | Reviewer | Why review | What |
+|---|-------|-------|------|----------|------------|------|
+| 1 | Explore current endpoints | Haiku | 0 | — | read-only, machine-checkable | Read all 8 endpoint files, summarize patterns, list auth differences |
+| 2 | Design the shared auth middleware | Sonnet | 2-HIGH | Opus | every endpoint consumes it — a subtle bug here propagates to all 8 | Draft the middleware; Opus reviews the seam (token validation, error paths) before anything depends on it |
+| 3 | Migrate `/users` endpoint | Sonnet | 0 | — | tests assert it | Rewrite users route with v2 patterns + the reviewed middleware |
+| 4 | Validation gate | Haiku | 0 | — | — | Run `/users` tests + lint, report pass/fail |
+| 5 | Migrate remaining 7 endpoints | Sonnet | 0 | — | same pattern, parallel | Apply v2 pattern to orders, products, payments, etc. |
+| 6 | Final validation gate | Haiku | 0 | — | — | Full test suite + integration tests |
 
-**Model mix:** ~40% Haiku, ~50% Sonnet, ~10% Opus
-**Staging:** Test on `/users` first, validate, then expand to all 8
+**Top-tier touches:** none — the one Opus review on the shared seam is enough here.
+**Staging:** Test on `/users` first, validate, then expand to all 8.
 
 ---
 
-## Lean Savings Report
+## Why the middleware gets reviewed but the endpoints don't
 
-| Step | Model Used | Est. Input | Est. Output | Cost    | If All-Opus |
-|------|-----------|------------|-------------|---------|-------------|
-| 1    | Haiku     | ~4K        | ~2K         | $0.011  | $0.210      |
-| 2    | Sonnet    | ~6K        | ~4K         | $0.078  | $0.390      |
-| 3    | Haiku     | ~2K        | ~0.5K       | $0.004  | $0.068      |
-| 4    | Sonnet    | ~20K       | ~15K        | $0.285  | $1.425      |
-| 5    | Haiku     | ~3K        | ~1K         | $0.006  | $0.120      |
-| **Total** |      |            |             | **$0.38** | **$2.21** |
+The 7 remaining endpoints are **Gate 0** work: they follow the pattern set by
+`/users`, and the test suite asserts they're correct. No judgment review — a cheap
+drafter + the validation gate fully covers them.
 
-**Saved: ~83% vs all-Opus execution**
+The shared auth middleware is **Gate 2 / HIGH**: it's a contract all 8 endpoints
+consume, so a subtle pitfall (a token-expiry edge case, a wrong error status) would
+propagate everywhere before any single endpoint's tests caught it. That's exactly
+the load-bearing seam worth one tier up — Opus reviews the middleware *segment*
+(with its contract: who calls it, what it must guarantee) for judgment and missed
+cases, not just "does it run."
+
+Note the middleware is small enough to live in one file, so per the **net-negative
+rule** the Sonnet-draft + Opus-review round-trip is borderline — for a seam this
+size, having Opus *draft it directly* is often the cheaper, higher-quality move.
+The conductor picks whichever fits; the point is the seam gets frontier judgment and
+the 7 mechanical endpoints don't.

@@ -1,7 +1,7 @@
 {
   "name": "lean",
-  "version": "1.0.0",
-  "description": "Plan tasks with optimal model routing to minimize token usage. Decomposes work into steps, assigns Haiku/Sonnet/Opus per step, adds quality gates, persists plans, and reports savings.",
+  "version": "2.0.0",
+  "description": "Turn your strongest model into a conductor: route each step to the cheapest capable model, and escalate only load-bearing pieces to a pricier reviewer that catches pitfalls early. Subscription, API, or hybrid.",
   "author": "civillizard",
   "license": "MIT",
   "skills": ["skills/lean"],
@@ -19,13 +19,15 @@
     ]
   },
   "keywords": [
-    "token-optimization",
     "model-routing",
-    "cost-reduction",
+    "draft-review",
+    "model-escalation",
+    "token-optimization",
     "task-planning",
     "quality-gates",
     "haiku",
     "sonnet",
-    "opus"
+    "opus",
+    "fable"
   ]
 }
