@@ -1,5 +1,45 @@
 # Changelog
 
+## 3.0.0 (2026-11-27)
+
+Two conductor paths. The routing rubric from 2.0.0 is unchanged in spirit; what
+changed is *who designs the flow* for high-stakes work.
+
+### Added
+- **Apex path (Step 2.7)** — tasks labelled apex at the floor (schema, public API,
+  migrations, edits to the agent's own rules/skills, novel architecture,
+  multi-subsystem; ties go to apex) are conducted by the top tier. One conduct,
+  capped at 1 and exempt from the review cap, plus at most one execution seam
+  review. The conduct opens with a gap-check ("what I'd need that I wasn't given");
+  the approval screen shows the human what context it was given. Falls back to
+  session-model conduct if the top tier can't be dispatched.
+- **Mid-path escalation option** on the approval screen, so a misclassified apex
+  task can always be flipped.
+- **Kill rule for the apex path** — a running one-line-per-task log; if ≥2 of the
+  last 5 apex tasks had their plan changed at approval, or ≥2 needed rework, revert
+  to session-model conduct.
+- **Calibration lines** in `.lean-plan.md` (`conductor`, `qanda_flow_modified`,
+  `structural_issue_found`, `flipped_from_mid`, `found_blocker`, optional lesson
+  fields). `qanda_flow_modified` is mechanical: `y` iff the answer was not
+  "Approve as planned".
+- **HIGH → top-tier opt-up** with four guards (named reason, recorded outcome, a real
+  A/B over the first ~5, a rate tripwire).
+- **Effort axis** — per-piece thinking level, carried in the flow table.
+- **Better prompt before bigger model** — first miss at a tier retries there with an
+  improved prompt; second miss escalates (with carve-outs).
+- **Budget step** — remaining quota is the user's call and never a routing input.
+- **Optional lessons file** — per-archetype minimum tier + prompt pattern, consulted
+  before the gates and grown after misses.
+- **Tier-aware hook** — `LEAN_SESSION_MODEL` makes `task-model-guard.py` suggest
+  only tiers cheaper than the session model (and `opus` for complex work on a
+  top-tier session). Unset = 2.0.0 behaviour, byte-identical (362-case parity
+  check). New `tests/` (16 tests).
+
+### Changed
+- `.lean-plan.md` is not overwritten when it already exists or is tracked; a
+  per-task file is written instead.
+- The ≤2 top-tier touch cap is now path-specific: apex path = conduct + ≤1 review.
+
 ## 2.0.0 (2026-06-10)
 
 Re-architected from a flat per-step model table into a **conductor with a surgical

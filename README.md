@@ -6,6 +6,11 @@ load-bearing pieces* to a pricier tier that reviews for pitfalls a cheaper model
 misses. Decomposes work, assigns Haiku/Sonnet/Opus/Fable per step, reviews
 surgically, and persists the plan.
 
+**v3:** two conductor paths. Routine work is conducted inline by your session model;
+**apex** work (schema, public API, migrations, novel architecture, multi-subsystem)
+is conducted by the top tier, which opens by naming what context it is missing. A
+built-in kill rule reverts the apex path if it stops earning its cost.
+
 ## Why
 
 Coding agents default to the top model for everything — including reading files,
@@ -60,6 +65,9 @@ Most rows have no reviewer. That's the point — review is the surgical exceptio
 - **Draft → review escalation** — load-bearing pieces reviewed one tier up for *judgment & pitfalls*, not just "does it run"
 - **The net-negative rule** — draft→review only pays for bulk; a small/single-file seam gets drafted directly by the higher tier (the round-trip would cost more)
 - **Surgical top-tier use** — capped at ≤2 apex touches/task, with a structured review brief + repo probe rights so the review is deep, not a shallow paste-read
+- **Two conductor paths** — the session model conducts routine work; the top tier conducts apex work (one conduct + at most one seam review), with a gap-check first and a kill rule that reverts the path if approvals keep changing its plans
+- **Better prompt before bigger model** — a cheap-tier miss gets a sharper prompt at the same tier first; only a second miss escalates
+- **Effort axis** — thinking level set per piece (none for mechanical, "think hard" for judgment, "ultrathink" for apex), carried in the flow table
 - **Engagement floor** — below ~3 steps / 2 files, the conductor stays out of the way
 - **Staged execution** — test on one item, validate, then scale to all
 - **Validation gates** — a cheap model validates between every stage (catch errors cheap)
@@ -110,6 +118,16 @@ The hook does two things:
 2. **Nudges `/lean`** when it detects a multi-step task and no `.lean-plan.md` exists
 
 It never blocks — only suggests.
+
+**Tier-aware (v3):** tell the hook your session model and it only suggests tiers
+*cheaper* than it — e.g. on a Fable session, complex delegated work gets an `opus`
+suggestion; on a Sonnet session it never suggests Sonnet or Opus.
+
+```bash
+export LEAN_SESSION_MODEL=opus   # haiku | sonnet | opus | fable, or a full model id
+```
+
+Unset, it behaves exactly as in v2.0.0. Tests: `python3 -m pytest -q tests/`.
 
 ## Drafter Routing Reference (Gate 0)
 

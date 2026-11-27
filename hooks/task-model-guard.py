@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 """PreToolUse hook for Agent tool — suggests optimal model routing.
 
-Fires when a subagent is about to spawn. If no model is specified
-(defaults to Opus), analyzes the prompt/subagent_type and suggests a
-lighter model when appropriate. Never blocks — only suggests via "ask".
+Fires when a subagent is about to spawn. If no model is specified (the
+subagent then inherits the session model), analyzes the prompt/subagent_type
+and suggests a cheaper model when appropriate. Never blocks — it only adds a
+suggestion to the allow decision.
+
+Tier-aware: set LEAN_SESSION_MODEL to your session model (haiku | sonnet |
+opus | fable, or a full model id such as claude-opus-5-5). The hook then only
+suggests tiers strictly cheaper than it, and — when the session runs above
+Opus — suggests opus for complex delegated work. Unset or unrecognised: the
+v2.0.0 behaviour (no assumption about the session model).
 
 Also nudges the user to run /lean when a complex multi-step task is
 detected without a .lean-plan.md in the working directory.
@@ -30,6 +37,20 @@ import json
 import os
 import re
 import sys
+
+
+# --- Tier ladder (cheapest -> priciest) ---
+
+TIERS = ["haiku", "sonnet", "opus", "fable"]
+
+
+def session_tier():
+    """Rank of the session model from LEAN_SESSION_MODEL, or None if unknown."""
+    raw = os.environ.get("LEAN_SESSION_MODEL", "").lower()
+    for rank, name in enumerate(TIERS):
+        if name in raw:
+            return rank
+    return None
 
 
 # --- Pattern banks for task classification ---
@@ -64,8 +85,11 @@ MULTI_STEP_PATTERNS = [
 ]
 
 
-def classify_task(prompt, subagent_type, description):
-    """Return (suggested_model, reason) or (None, None) if Opus is fine."""
+def classify_task(prompt, subagent_type, description, session=None):
+    """Return (suggested_model, reason) or (None, None) if no cheaper tier fits.
+
+    session: rank of the session model in TIERS, or None when unknown.
+    """
     text = f"{prompt} {description}".lower()
 
     # Subagent type is a strong signal
@@ -74,9 +98,12 @@ def classify_task(prompt, subagent_type, description):
     if subagent_type == "Bash":
         return "haiku", "Bash agents run simple shell commands"
 
-    # Complex signals override everything — Opus is correct
+    # Complex signals override everything — opus-class work. Only worth a
+    # suggestion when the session runs above opus (opus is then cheaper).
     complex_score = sum(1 for p in COMPLEX_PATTERNS if re.search(p, text))
     if complex_score > 0:
+        if session is not None and session > TIERS.index("opus"):
+            return "opus", "Complex delegated work — opus is cheaper than the session model"
         return None, None
 
     # Score the task
@@ -130,8 +157,12 @@ def main():
     if model:
         return  # exit 0 with no output = allow
 
-    # No model = inherits parent (likely Opus). Check if lighter model works.
-    suggested, reason = classify_task(prompt, subagent_type, description)
+    # No model = inherits the session model. Check if a cheaper tier works.
+    session = session_tier()
+    suggested, reason = classify_task(prompt, subagent_type, description, session)
+    # Only suggest a tier strictly cheaper than a known session model.
+    if suggested and session is not None and TIERS.index(suggested) >= session:
+        suggested, reason = None, None
 
     # Also check if /lean would help
     lean_nudge = detect_lean_opportunity(prompt, description)
