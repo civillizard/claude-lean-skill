@@ -6,15 +6,15 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 
 ### hesreallyhim / awesome-claude-code
 - **URL:** https://github.com/hesreallyhim/awesome-claude-code/issues/1323
-- **Status:** OPEN — validation-passed, awaiting maintainer review
+- **Status:** OPEN, validation-passed, awaiting maintainer review
 - **Submitted:** 2026-04-03 (resubmission of #1091, closed 2026-03-24 for 7-day cooldown)
-- **Method:** Issue form (web UI only — CLI/PR submissions risk ban)
+- **Method:** Issue form (web UI only; CLI/PR submissions risk ban)
 - **Labels:** validation-passed, resource-submission
 - **Notes:** All validation checks passed. Maintainer asked to resubmit after cooldown. Use web UI form only.
 
 ### Anthropic Plugin Directory
 - **URL:** https://platform.claude.com/plugins/submissions (track status here)
-- **Status:** SUBMITTED — pending review
+- **Status:** SUBMITTED, pending review
 - **Submitted:** 2026-03-30
 - **Method:** Web form at `platform.claude.com/plugins/submit`
 - **Portal:** Submit: `/plugins/submit` | Track: `/plugins/submissions` (only visible after submitting)
@@ -23,14 +23,14 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 
 ### SkillHub (skillhub.club)
 - **Status:** NOT INDEXED (as of 2026-04-07, waiting for auto-discovery)
-- **How it works:** Auto-indexes GitHub repos with `SKILL.md` files — no manual submission needed
+- **How it works:** Auto-indexes GitHub repos with `SKILL.md` files, no manual submission needed
 - **SKILL.md location:** `skills/lean/SKILL.md` is correct (matches Anthropic's own repo pattern at `anthropics/skills`)
-- **CLI:** Broken (v0.1.2, malformed OAuth URL). Not needed — auto-indexing is the standard path.
+- **CLI:** Broken (v0.1.2, malformed OAuth URL). Not needed: auto-indexing is the standard path.
 - **Platform:** Legitimate (36K+ skills, Anthropic's own 17 skills listed, desktop app with 494 GitHub stars)
 
 ### Anthropic Skills Repo (anthropics/skills)
 - **Status:** NOT SUBMITTED
-- **Method:** PR to official repo — more formal, gives Anthropic endorsement
+- **Method:** PR to official repo, more formal, gives Anthropic endorsement
 - **Notes:** Would be the highest-value listing if accepted
 
 ## Closed Listings
@@ -49,11 +49,11 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 
 ---
 
-## MacOS Full Disk Access Tunnel — Directory Listings
+## MacOS Full Disk Access Tunnel: Directory Listings
 
 ### iCHAIT / awesome-macOS
 - **URL:** https://github.com/iCHAIT/awesome-macOS/pull/772
-- **Status:** REJECTED — closed by maintainer (herrbischoff) on 2026-04-07
+- **Status:** REJECTED, closed by maintainer (herrbischoff) on 2026-04-07
 - **Submitted:** 2026-04-03
 - **Rejection reasons:** New repo with no stars; perceived as "circumventing security"; AI integration section flagged; didn't follow PR template (checklist items, alphabetical order, icon badges)
 - **Maintainer:** Marcel Bischoff (marcel@herrbischoff.com, @herrbischoff)
@@ -61,7 +61,7 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 
 ### BlackSquirrelz / awesome-apple-security
 - **URL:** https://github.com/BlackSquirrelz/awesome-apple-security/pull/2
-- **Status:** MERGED — accepted by Tobias Weisskopf on 2026-04-09
+- **Status:** MERGED, accepted by Tobias Weisskopf on 2026-04-09
 - **Submitted:** 2026-04-03
 - **Notes:** Listed under "TCC & Permissions Tools". First successful directory listing for FDA Tunnel.
 
@@ -82,7 +82,7 @@ Tracking all public listings, submissions, and distribution channels for the `/l
 
 From research on 2026-03-30:
 
-1. `SKILL.md` is THE standard — YAML frontmatter (`name`, `description`) required
+1. `SKILL.md` is THE standard: YAML frontmatter (`name`, `description`) required
 2. Description must say WHAT it does AND WHEN to use it (Claude uses this for auto-discovery)
 3. Keep SKILL.md body under 500 lines
 4. Test with Haiku, Sonnet, and Opus (behavior differs)
